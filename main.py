@@ -5,21 +5,46 @@ import sys
 
 import csv
 from rtstock.stock import Stock
+import rtstock.utils as Utils
 
 def main():
-	short_list = []
-	with open("symbols.csv", "rb") as symbol_file:
-		reader = csv.reader(symbol_file)
-		for symbol in reader:
-			latest_stock_price = Stock(symbol).get_latest_price()[0]
-			print(symbol)
-			print(latest_stock_price[u'LastTradePriceOnly'])
-			if latest_stock_price[u'LastTradePriceOnly'] < 2.00:
-				short_list.append(symbol)
+    make_short_list_of_stocks()
 
-	with open("symbols_short_list.csv", "wb") as file:
-		writer = csv.writer(file)
-		writer.writerow(short_list)
+
+def make_short_list_of_stocks():
+    stocks_under_two = {}
+    all_stocks = []
+    all_stocks_updated = []
+    with open("symbols.csv", "rb") as symbol_file:
+        reader = csv.reader(symbol_file)
+        for symbol in reader:
+            all_stocks.append(symbol[0])
+
+    for i in range(1,21):
+        if i == 1:
+            partial_stocks = all_stocks[:i*400]
+        else:
+            partial_stocks = all_stocks[prev_i:i*400]
+        prev_i = i*400
+        partial_stocks = fetch_latest_price(partial_stocks)
+        all_stocks_updated = all_stocks_updated + partial_stocks
+
+    for stock in all_stocks_updated:
+        if stock[u'LastTradePriceOnly'] != None:
+            curr_price = float(stock[u'LastTradePriceOnly'])
+            if curr_price < 1.30:
+                stocks_under_two[stock[u'Symbol']] = stock[u'LastTradePriceOnly']
+                print(stock[u'Symbol'] + stock[u'LastTradePriceOnly'])
+
+    print(len(stocks_under_two))
+
+
+def fetch_latest_price(stock):
+    return request_stock_info(stock, ['Symbol', 'LastTradePriceOnly'])
+
+
+def request_stock_info(stock, info_needed):
+    return Utils.request_quotes(stock, info_needed)
 
 if __name__ == '__main__':
     main()
