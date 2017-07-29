@@ -1,6 +1,18 @@
 from bs4 import BeautifulSoup
 import urllib
 
+def volumeIndicator(symbol, multiplier):
+    url = getURL(symbol)
+    html = getHtml(url)
+    soup = getSoup(html)
+    try:
+        volume = int(findVolume(soup, symbol).replace(',',''))
+        avgVolume = int(fiftyDayAverageVolume(soup, symbol).replace(',',''))
+    except ValueError:
+        return [False, 'NA', 'NA']
+    volume_spiked = (volume > avgVolume * multiplier)
+    return [volume_spiked, volume, avgVolume]
+
 def getURL(symbol):
     return "http://www.nasdaq.com/symbol/" + symbol
 
@@ -12,14 +24,20 @@ def getSoup(htmlString):
 
 def findVolume(soup, symbol):
     volumeLabel = soup.find(id=symbol.upper()+"_Volume")
-    return volumeLabel.string
+    try:
+        return volumeLabel.string
+    except AttributeError:
+        return "NA"
 
 def fiftyDayAverageVolume(soup, symbol):
     volumeLabel = soup.find(id=symbol.upper()+"_Volume")
     tag = volumeLabel.parent.patent
     avgVolumeRow = volumeLabel.parent.parent.next_sibling.next_sibling
     avgVolume = avgVolumeRow.contents[3]
-    return avgVolume.string
+    try:
+        return avgVolume.string
+    except AttributeError:
+        return "NA"
 
 if __name__ == "__main__":
     symbol = raw_input("Please enter a symbol: ")
