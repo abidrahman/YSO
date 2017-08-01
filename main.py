@@ -88,7 +88,7 @@ def write_stocks_to_file(stock_list, file_name):
         writer = csv.writer(write_file)
         for stock in stock_list:
             print(stock)
-            writer.writerow(stock)
+            writer.writerow(stock.encode('utf8'))
 
 def read_stocks_from_file(file_name):
     all_stocks = []
