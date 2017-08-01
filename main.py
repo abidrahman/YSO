@@ -37,6 +37,7 @@ def news_indicator(stock_list):
     updated_stock_list = []
     for stock in stock_list:
         l = len(stock)
+        print stock
         stock_news_date = newsIndicator(stock[0])
         if l == 2:
             updated_stock_list.append((stock[0], stock[1], stock_news_date))
@@ -48,6 +49,7 @@ def news_indicator(stock_list):
 def volume_indicator(stock_list, multiplier):
     updated_stock_list = []
     for stock in stock_list:
+        print stock
         volume_info = volumeIndicator(stock[0], multiplier)
         if volume_info[0]:
             updated_stock_list.append((stock[0], stock[1], volume_info[1], volume_info[2]))
@@ -105,10 +107,10 @@ def request_stock_info(stock, info_needed):
 if __name__ == '__main__':
     print("Welcome to the Young Stock Observer.")
     file_in = raw_input("Enter stock file: ")
-    
+
     #Price Filter
     price = raw_input("Would you like to add a price filter? (Y/N): ")
-    if price == 'Y':
+    if price.upper() == 'Y':
         price_input = raw_input("Enter maximum price: ")
         price = (True, float(price_input))
     else:
@@ -116,7 +118,7 @@ if __name__ == '__main__':
 
     #Volume Indicator
     volume = raw_input("Would you like to use the volume indicator? (Y/N): ")
-    if volume == 'Y':
+    if volume.upper() == 'Y':
         volume_input = raw_input("Enter minimum volume multiplier: ")
         volume = (True, float(volume_input))
     else:
@@ -124,7 +126,7 @@ if __name__ == '__main__':
 
     #News Indicator
     news = raw_input("Would you like to use the news indicator? (Y/N): ")
-    if (news == 'Y'):
+    if news.upper() == 'Y':
         news = True
     else:
         news = False
@@ -133,4 +135,3 @@ if __name__ == '__main__':
     file_out = raw_input("Enter name for output file: ")
     print("Calculating..")
     make_short_list_of_stocks(file_in, price, volume, news, file_out)
-
