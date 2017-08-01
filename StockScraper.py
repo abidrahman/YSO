@@ -35,6 +35,14 @@ def getDataPoint(soup, attrString):
     except AttributeError:
         return "NA"
 
+def getAllData(symbol):
+    url = getURL(symbol)
+    html = getHtml(url)
+    soup = getSoup(html)
+    data = {}
+    for attr in attributes.keys():
+        data[attr] = getDataPoint(soup, attr) 
+
 if __name__ == "__main__":
     symbol = raw_input("Please enter a symbol: ")
     url = getURL(symbol)
