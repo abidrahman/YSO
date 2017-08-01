@@ -38,11 +38,11 @@ def news_indicator(stock_list):
     for stock in stock_list:
         l = len(stock)
         print stock
-        stock_news_date = newsIndicator(stock[0])
+        stock_news_date = newsIndicator(stock[0])[0]
         if l == 2:
-            updated_stock_list.append((stock[0], stock[1], stock_news_date))
+            updated_stock_list.append((stock[0], stock[1], stock_news_date, newsIndicator(stock[0])[1]))
         elif l == 4:
-            updated_stock_list.append((stock[0], stock[1], stock_news_date, stock[2], stock[3]))
+            updated_stock_list.append((stock[0], stock[1], stock_news_date, stock[2], stock[3], newsIndicator(stock[0])[1]))
     updated_stock_list.sort(key=lambda stock: datetime.datetime.strptime(stock[2], '%m/%d/%Y'))
     return updated_stock_list
 
