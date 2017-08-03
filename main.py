@@ -87,8 +87,10 @@ def write_stocks_to_file(stock_list, file_name):
     with open(file_name, "wb") as write_file:
         writer = csv.writer(write_file)
         for stock in stock_list:
-            print(stock)
-            writer.writerow(stock.encode('utf8'))
+            print(stock[0:-1])
+            print(stock[-1])
+            print()
+            writer.writerow(stock[0:-1])
 
 def read_stocks_from_file(file_name):
     all_stocks = []
