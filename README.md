@@ -32,9 +32,9 @@ After entering the name of the stock file, the user will be prompted with the op
 
 ### Price Filter
 
-	- Allows the user to set a minimum stock price. 
-	- Only stocks under the set price will be returned. 
-	- Eg. Searching for all stocks under $2.00.
+- Allows the user to set a minimum stock price. 
+- Only stocks under the set price will be returned. 
+- Eg. Searching for all stocks under $2.00.
 
 ```
 Would you like to add a price filter? (Y/N): Y
@@ -43,9 +43,10 @@ Enter maximum price: 2.00
 
 ### Volume Multiplier
 
-	- Allows the user to set a volume multiplier filter on the list of stocks. 
-	- The volume indicator can be useful in spotting 'hot' stocks with a high increase in volume. 
-	- The volume multiplier queries the fifty day moving average of the stock and compares it with the volume of the previous day using the following equation using the following equation, only stocks that meet this condition will be returned:
+- Allows the user to set a volume multiplier filter on the list of stocks. 
+- The volume indicator can be useful in spotting 'hot' stocks with a high increase in volume. 
+- The volume multiplier queries the fifty day moving average of the stock and compares it with the volume of the previous day using the following equation using the following equation, only stocks that meet this condition will be returned:
+
 ```
 //Equation: prev_day_volume > fifty_day_avg_volume * volume_multiplier
 
@@ -55,9 +56,10 @@ Enter minimum volume multiplier: 2
 	
 ### News Indicator
 
-	- Allows the user to add a News filer on the list of stocks. 
-	- The news indicator scrapes the nasdaq website for news articles relating to each stock. 
-	- If the news indicator is added, the list of stocks will be sorted based on the date of the last press release of that stock. The output will also include the headline of the last press release.
+- Allows the user to add a News filer on the list of stocks.
+- The news indicator scrapes the nasdaq website for news articles relating to each stock.
+- If the news indicator is added, the list of stocks will be sorted based on the date of the last press release of that stock. The output will also include the headline of the last press release.
+
 ```
 Would you like to use the news indicator? (Y/N): Y
 ```
